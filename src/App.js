@@ -13,6 +13,28 @@ class BooksApp extends React.Component {
     dontRead:[]
   }
 
+  showBookShelf() {
+    BooksAPI.getAll()
+    .then((books) => {
+      this.setState({
+        books: books,
+        reading: books.filter((book) => book.shelf == 'reading'),
+        wantRead: books.filter((book) => book.shelf == 'wantRead'),
+        dontRead: books.filter((book) => book.shelf == 'dontRead')
+      })
+    })
+  }
+
+  updateBookShelf() {
+    BooksAPI.update(book, shelf)
+    .then((books) => {
+      this.showBookShelf()
+    })
+  }
+
+  componentDidMount() {
+    this.showBookShelf()
+  }
 
   render() {
     return (
