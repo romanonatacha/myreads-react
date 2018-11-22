@@ -24,9 +24,9 @@ class Library extends Component {
                                                     <div className="book-shelf-changer">
                                                         <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
                                                             <option value="none" disabled>Move to...</option>
-                                                            <option value="currentlyReading">Currently Reading</option>
-                                                            <option value="wantToRead">Want to Read</option>
-                                                            <option value="read">Read</option>
+                                                            <option value="currentlyReading">i am reading now</option>
+                                                            <option value="wantToRead">i will read soon</option>
+                                                            <option value="read">already read it</option>
                                                             <option value="none">None</option>
                                                         </select>
                                                     </div>
@@ -51,9 +51,9 @@ class Library extends Component {
                                                     <div className="book-shelf-changer">
                                                         <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
                                                             <option value="none" disabled>Move to...</option>
-                                                            <option value="currentlyReading">Currently Reading</option>
-                                                            <option value="wantToRead">Want to Read</option>
-                                                            <option value="read">Read</option>
+                                                            <option value="currentlyReading">i am reading now</option>
+                                                            <option value="wantToRead">i will read soon</option>
+                                                            <option value="read">already read it</option>
                                                             <option value="none">None</option>
                                                         </select>
                                                     </div>
@@ -79,9 +79,9 @@ class Library extends Component {
                                                     <div className="book-shelf-changer">
                                                         <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
                                                             <option value="none" disabled>Move to...</option>
-                                                            <option value="currentlyReading">Currently Reading</option>
-                                                            <option value="wantToRead">Want to Read</option>
-                                                            <option value="read">Read</option>
+                                                            <option value="currentlyReading">i am reading now</option>
+                                                            <option value="wantToRead">i will read soon</option>
+                                                            <option value="read">already read it</option>
                                                             <option value="none">None</option>
                                                         </select>
                                                     </div>

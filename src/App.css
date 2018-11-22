@@ -8,7 +8,7 @@ body {
 
 body, .app {
   background: white;
-  font-family: Helvetica, sans-serif;
+  font-family: 'Encode Sans Condensed', sans-serif;
 }
 
 /* main page */
@@ -16,14 +16,13 @@ body, .app {
 .list-books-title {
   padding: 10px 0;
   background: #00b4b4;
-  text-align: center;
 }
 
 .list-books-title h1 {
   font-weight: 400;
   margin: 0;
   color: white;
-  text-align: left;
+  letter-spacing: 5px;
   margin-left: 40px;
   font-weight: bold;
 }
@@ -46,6 +45,8 @@ body, .app {
 
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
+  font-family: 'Indie Flower', cursive;
+  text-align: center;
 }
 
 .bookshelf-books {

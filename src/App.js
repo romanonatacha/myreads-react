@@ -43,10 +43,11 @@ class BooksApp extends React.Component {
           <Library
             currentlyReading={this.state.currentlyReading}
             wantToRead={this.state.wantToRead}
-            read={this.state.read} />
+            read={this.state.read}
+            onUpdate={this.updateBookShelf} />
         )} />
         <Route exact path={process.env.PUBLIC_URL + "/search"} render={() => (
-          <SearchBook />
+          <SearchBook books={this.state.books} onUpdate={this.updateBookShelf} />
         )} />
       </div>
     )
