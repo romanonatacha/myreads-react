@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Book from './Book'
 
 class Library extends Component {
 
     render() {
+
+        const { currentlyReading, wantToRead, read, onUpdate } = this.props
+
 
         return (
             <div className="list-books">
@@ -16,25 +20,8 @@ class Library extends Component {
                             <h2 className="bookshelf-title">i am reading now</h2>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
-                                    {this.props.currentlyReading.map(book => (
-                                        <li key={book.id}>
-                                            <div className="book">
-                                                <div className="book-top">
-                                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                                                    <div className="book-shelf-changer">
-                                                        <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
-                                                            <option value="none" disabled>Move to...</option>
-                                                            <option value="currentlyReading">i am reading now</option>
-                                                            <option value="wantToRead">i will read soon</option>
-                                                            <option value="read">already read it</option>
-                                                            <option value="none">None</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="book-title">{book.title}</div>
-                                                <div className="book-authors">{book.authors}</div>
-                                            </div>
-                                        </li>
+                                    {currentlyReading.map(book => (
+                                        <Book/>
                                     ))}
                                 </ol>
                             </div>
@@ -43,25 +30,8 @@ class Library extends Component {
                             <h2 className="bookshelf-title">i will read soon</h2>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
-                                    {this.props.wantToRead.map(book => (
-                                        <li key={book.id}>
-                                            <div className="book">
-                                                <div className="book-top">
-                                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                                                    <div className="book-shelf-changer">
-                                                        <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
-                                                            <option value="none" disabled>Move to...</option>
-                                                            <option value="currentlyReading">i am reading now</option>
-                                                            <option value="wantToRead">i will read soon</option>
-                                                            <option value="read">already read it</option>
-                                                            <option value="none">None</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="book-title">{book.title}</div>
-                                                <div className="book-authors">{book.authors}</div>
-                                            </div>
-                                        </li>
+                                    {wantToRead.map(book => (
+                                        <Book/>
                                     ))}
 
                                 </ol>
@@ -71,25 +41,8 @@ class Library extends Component {
                             <h2 className="bookshelf-title">i've already read it</h2>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
-                                    {this.props.read.map(book => (
-                                        <li key={book.id}>
-                                            <div className="book">
-                                                <div className="book-top">
-                                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                                                    <div className="book-shelf-changer">
-                                                        <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
-                                                            <option value="none" disabled>Move to...</option>
-                                                            <option value="currentlyReading">i am reading now</option>
-                                                            <option value="wantToRead">i will read soon</option>
-                                                            <option value="read">already read it</option>
-                                                            <option value="none">None</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="book-title">{book.title}</div>
-                                                <div className="book-authors">{book.authors}</div>
-                                            </div>
-                                        </li>
+                                    {read.map(book => (
+                                        <Book/>
                                     ))}
                                 </ol>
                             </div>

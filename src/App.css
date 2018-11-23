@@ -190,6 +190,10 @@ button:active {
   cursor: pointer;
 }
 
+.showing-books {
+  text-align: center;
+}
+
 /* book cover */
 
 .book-cover {

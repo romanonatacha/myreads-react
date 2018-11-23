@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
+import Book from './Book'
 
 class SearchBook extends Component {
 
@@ -14,13 +15,16 @@ class SearchBook extends Component {
 
     render() {
 
+        const { books, onUpdate } = this.props
+        const { query } = this.state
+
         let showingBooks
 
-        if (this.state.query) {
-            const match = new RegExp(escapeRegExp(this.state.query), 'i')
-            showingBooks = this.props.books.filter((book) => match.test(book.title) || match.test(book.authors))
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingBooks = books.filter((book) => match.test(book.title) || match.test(book.authors))
         } else {
-            showingBooks = this.props.books
+            showingBooks = books
         }
 
         return (
@@ -30,10 +34,16 @@ class SearchBook extends Component {
                     <div className="search-books-input-wrapper">
                         <input type="text" placeholder="Search by title or author"
                         onChange={(event) => this.updateQuery(event.target.value)}
-                        value={this.state.query} />
+                        value={query} />
                     </div>
                 </div>
                 <div className="search-books-results">
+                { showingBooks.length !== books.length && (
+                    <div className="showing-books">
+                        <span>Now showing {showingBooks.length} of {books.length} total</span>
+                    </div>
+                )}
+
                     <ol className="books-grid">
                     {showingBooks.map(book => (
                         <li key={book.id}>
@@ -41,7 +51,7 @@ class SearchBook extends Component {
                             <div className="book-top">
                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                 <div className="book-shelf-changer">
-                                    <select onChange={(event) => this.props.onUpdate(book, event.target.value)} >
+                                    <select onChange={(event) => onUpdate(book, event.target.value)} >
                                         <option value="none" disabled>Move to...</option>
                                         <option value="currentlyReading">i am reading now</option>
                                         <option value="wantToRead">i will read soon</option>
