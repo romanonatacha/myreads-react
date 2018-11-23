@@ -1,31 +1,56 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp'
 import Book from './Book'
+import PropTypes from 'prop-types'
+import { search } from './utils/BooksAPI'
 
 class SearchBook extends Component {
 
-    state = {
-        query: ''
+    static propTypes = {
+        books: PropTypes.array.isRequired,
+        onMoveShelf: PropTypes.func.isRequired,
     }
 
+    state = {
+        books: []
+    }
+
+    clearBooks = () => {
+        this.setState(() => ({
+            books: []
+        }))
+    }
+
+
     updateQuery = (query) => {
-        this.setState({ query: query.trim() })
+        query = query.trim()
+
+        search(query)
+            .then((books) => {
+                if (books.error)
+                    return []
+
+                const myBooks = this.props.books
+                return books.map((book) => {
+                    const searchBook = myBooks.find((myBook) => myBook.id === book.id)
+                    book.shelf = searchBook ? searchBook.shelf : 'none'
+                    return book;
+                })
+            })
+            .then((books) => {
+                this.setState(() => ({
+                    books
+                }))
+            }).catch(() => {
+                this.clearBooks();
+            })
     }
 
     render() {
 
-        const { books, onUpdate } = this.props
-        const { query } = this.state
-
-        let showingBooks
-
-        if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i')
-            showingBooks = books.filter((book) => match.test(book.title) || match.test(book.authors))
-        } else {
-            showingBooks = books
-        }
+        const { books } = this.state
+        const { onMoveShelf } = this.props
+        
 
         return (
             <div className="search-books">
@@ -33,38 +58,14 @@ class SearchBook extends Component {
                     <Link className="close-search" to={process.env.PUBLIC_URL + "/"}>Close</Link>
                     <div className="search-books-input-wrapper">
                         <input type="text" placeholder="Search by title or author"
-                        onChange={(event) => this.updateQuery(event.target.value)}
-                        value={query} />
+                            onChange={(event) => this.updateQuery(event.target.value)} />
                     </div>
                 </div>
                 <div className="search-books-results">
-                { showingBooks.length !== books.length && (
-                    <div className="showing-books">
-                        <span>Now showing {showingBooks.length} of {books.length} total</span>
-                    </div>
-                )}
-
                     <ol className="books-grid">
-                    {showingBooks.map(book => (
-                        <li key={book.id}>
-                        <div className="book">
-                            <div className="book-top">
-                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                                <div className="book-shelf-changer">
-                                    <select onChange={(event) => onUpdate(book, event.target.value)} >
-                                        <option value="none" disabled>Move to...</option>
-                                        <option value="currentlyReading">i am reading now</option>
-                                        <option value="wantToRead">i will read soon</option>
-                                        <option value="read">already read it</option>
-                                        <option value="none">None</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="book-title">{book.title}</div>
-                            <div className="book-authors">{book.authors}</div>
-                        </div>
-                    </li>
-                    ))}
+                        {books.map((book) => (
+                            <Book key={book.id} book={book} onMoveShelf={onMoveShelf} />
+                        ))}
                     </ol>
                 </div>
             </div>

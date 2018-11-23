@@ -1,72 +1,19 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
-import * as BooksAPI from './BooksAPI'
-
+import PropTypes from 'prop-types'
+import { allMyBooks } from './utils/Helper'
 
 class Library extends Component {
 
-    state = {
-        books: [],
-        currentlyReading: [],
-        wantToRead: [],
-        read: []
-    }
-
-    // showBookShelf() {
-    //     BooksAPI.getAll()
-    //         .then((books) => {
-    //             this.setState({
-    //                 books: books,
-    //                 currentlyReading: books.filter((book) => book.shelf === 'currentlyReading'),
-    //                 wantToRead: books.filter((book) => book.shelf === 'wantToRead'),
-    //                 read: books.filter((book) => book.shelf === 'read')
-    //             })
-    //         })
-    // }
-
-    // updateBookShelf = (book, shelf) => {
-    //     BooksAPI.update(book, shelf)
-    //         .then((books) => {
-    //             this.showBookShelf(books)
-    //         })
-    // }
-
-    updateBookShelf = (book, shelf) => {
-        BooksAPI.update(book, shelf);
-        book.shelf = shelf;
-        this.setState(state => {
-            books: state.books.filter(b => b.id === book.id).concat([book])
-        })
-    }
-
-    // componentDidMount() {
-    //     this.showBookShelf()
-    // }
-
-    async componentDidMount() {
-        const books = await BooksAPI.getAll()
-        this.setState({ books })
+    static propTypes = {
+        books: PropTypes.array.isRequired,
+        onMoveShelf: PropTypes.func.isRequired
     }
 
     render() {
 
-        const shelves = [
-            {
-                title: 'Currently Reading',
-                shelf: 'currentlyReading',
-            },
-            {
-                title: 'Want to Read',
-                shelf: 'wantToRead',
-            },
-            {
-                title: 'Read',
-                shelf: 'read',
-            },
-        ]
-
-        const { books, updateBookShelf } = this.props
+        const shelves = allMyBooks(this.props.books);
 
         return (
             <div className="list-books">
@@ -75,15 +22,14 @@ class Library extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        {shelves.map(item => (
+                        {[...shelves].map(([key, value]) =>
                             <BookShelf
-                                key={item.title}
-                                books={books}
-                                title={item.title}
-                                shelf={item.shelf}
-                                updateBookShelf={updateBookShelf}
+                                key={key}
+                                title={value.title}
+                                books={value.books}
+                                onMoveShelf={this.props.onMoveShelf}
                             />
-                        ))}
+                        )}
                     </div>
                 </div>
                 <div className="open-search">
