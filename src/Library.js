@@ -1,13 +1,72 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Book from './Book'
+import BookShelf from './BookShelf'
+import * as BooksAPI from './BooksAPI'
+
 
 class Library extends Component {
 
+    state = {
+        books: [],
+        currentlyReading: [],
+        wantToRead: [],
+        read: []
+    }
+
+    // showBookShelf() {
+    //     BooksAPI.getAll()
+    //         .then((books) => {
+    //             this.setState({
+    //                 books: books,
+    //                 currentlyReading: books.filter((book) => book.shelf === 'currentlyReading'),
+    //                 wantToRead: books.filter((book) => book.shelf === 'wantToRead'),
+    //                 read: books.filter((book) => book.shelf === 'read')
+    //             })
+    //         })
+    // }
+
+    // updateBookShelf = (book, shelf) => {
+    //     BooksAPI.update(book, shelf)
+    //         .then((books) => {
+    //             this.showBookShelf(books)
+    //         })
+    // }
+
+    updateBookShelf = (book, shelf) => {
+        BooksAPI.update(book, shelf);
+        book.shelf = shelf;
+        this.setState(state => {
+            books: state.books.filter(b => b.id === book.id).concat([book])
+        })
+    }
+
+    // componentDidMount() {
+    //     this.showBookShelf()
+    // }
+
+    async componentDidMount() {
+        const books = await BooksAPI.getAll()
+        this.setState({ books })
+    }
+
     render() {
 
-        const { currentlyReading, wantToRead, read, onUpdate } = this.props
+        const shelves = [
+            {
+                title: 'Currently Reading',
+                shelf: 'currentlyReading',
+            },
+            {
+                title: 'Want to Read',
+                shelf: 'wantToRead',
+            },
+            {
+                title: 'Read',
+                shelf: 'read',
+            },
+        ]
 
+        const { books, updateBookShelf } = this.props
 
         return (
             <div className="list-books">
@@ -16,37 +75,15 @@ class Library extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <div className="bookshelf">
-                            <h2 className="bookshelf-title">i am reading now</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {currentlyReading.map(book => (
-                                        <Book/>
-                                    ))}
-                                </ol>
-                            </div>
-                        </div>
-                        <div className="bookshelf">
-                            <h2 className="bookshelf-title">i will read soon</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {wantToRead.map(book => (
-                                        <Book/>
-                                    ))}
-
-                                </ol>
-                            </div>
-                        </div>
-                        <div className="bookshelf">
-                            <h2 className="bookshelf-title">i've already read it</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {read.map(book => (
-                                        <Book/>
-                                    ))}
-                                </ol>
-                            </div>
-                        </div>
+                        {shelves.map(item => (
+                            <BookShelf
+                                key={item.title}
+                                books={books}
+                                title={item.title}
+                                shelf={item.shelf}
+                                updateBookShelf={updateBookShelf}
+                            />
+                        ))}
                     </div>
                 </div>
                 <div className="open-search">
