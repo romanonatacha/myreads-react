@@ -206,3 +206,8 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
+
+.loader {
+  text-align: center;
+  margin-top: 20%;
+}

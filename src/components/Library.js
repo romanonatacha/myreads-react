@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import BookShelf from './BookShelf'
+import BookShelf from '../components/BookShelf'
 import PropTypes from 'prop-types'
-import { allMyBooks } from './utils/Helper'
+import { allMyBooks } from '../utils/Helper'
 
 class Library extends Component {
 

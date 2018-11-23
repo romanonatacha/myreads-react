@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Book from './Book'
+import Book from '../components/Book'
 import PropTypes from 'prop-types'
-import { search } from './utils/BooksAPI'
+import { search } from '../utils/BooksAPI'
 
 class SearchBook extends Component {
 

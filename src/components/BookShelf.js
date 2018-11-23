@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Book from './Book'
+import Book from '../components/Book'
 import PropTypes from 'prop-types'
 
 
