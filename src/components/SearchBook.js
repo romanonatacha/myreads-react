@@ -12,12 +12,12 @@ class SearchBook extends Component {
     }
 
     state = {
-        books: []
+        books: this.props.books
     }
 
     clearBooks = () => {
         this.setState(() => ({
-            books: []
+            books: this.props.books
         }))
     }
 
@@ -32,8 +32,8 @@ class SearchBook extends Component {
 
                 const myBooks = this.props.books
                 return books.map((book) => {
-                    const searchBook = myBooks.find((myBook) => myBook.id === book.id)
-                    book.shelf = searchBook ? searchBook.shelf : 'none'
+                    const booksFound = myBooks.find((myBook) => myBook.id === book.id)
+                    book.shelf = booksFound ? booksFound.shelf : 'none'
                     return book;
                 })
             })
@@ -50,7 +50,6 @@ class SearchBook extends Component {
 
         const { books } = this.state
         const { onMoveShelf } = this.props
-        
 
         return (
             <div className="search-books">
@@ -62,11 +61,19 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ol className="books-grid">
-                        {books.map((book) => (
-                            <Book key={book.id} book={book} onMoveShelf={onMoveShelf} />
-                        ))}
-                    </ol>
+                    {books.length > 0 ? (
+                        
+                        <ol className="books-grid">
+                            {books.map((book) => (
+                                <Book key={book.id} book={book} onMoveShelf={onMoveShelf} />
+                            ))}
+                        </ol>
+
+                    ) : (
+                            <div className="search-books-no-results">
+                                <span>No results</span>
+                            </div>
+                        )}
                 </div>
             </div>
         )

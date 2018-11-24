@@ -133,6 +133,9 @@ button:active {
   padding: 80px 10px 20px;
 }
 
+.search-books-no-results {
+  text-align: center;
+}
 /* books grid */
 
 .books-grid {
