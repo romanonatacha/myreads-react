@@ -40,7 +40,7 @@ npm start
 
 ## Build With
 
-* [Normalize.css](https://reactjs.org/)
+* [ReactJS](https://reactjs.org/)
 
  ## Authors
 
