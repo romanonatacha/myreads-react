@@ -44,9 +44,11 @@ body, .app {
 }
 
 .bookshelf-title {
-  border-bottom: 1px solid #dedede;
+  color: white;
   font-family: 'Indie Flower', cursive;
   text-align: center;
+  background-color: #f28a79;
+  padding: 10px;
 }
 
 .bookshelf-books {
@@ -75,7 +77,7 @@ body, .app {
 }
 
 .open-search a:hover {
-  background: rgb(255, 101, 63);
+  background: #f28a79;
   background-image: url('./icons/add.svg');
 }
 
@@ -192,7 +194,7 @@ button:active {
 }
 
 .book-shelf-changer:hover {
-  background: rgb(255, 101, 63);
+  background: #f28a79;
   background-image: url('./icons/arrow-drop-down.svg');
 }
 

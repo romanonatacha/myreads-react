@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import Book from '../components/Book'
 import PropTypes from 'prop-types'
 import { search } from '../utils/BooksAPI'
+import escapeRegExp from 'escape-string-regexp'
+
 
 class SearchBook extends Component {
 
@@ -12,15 +14,9 @@ class SearchBook extends Component {
     }
 
     state = {
+        query: '',
         books: this.props.books
     }
-
-    clearBooks = () => {
-        this.setState(() => ({
-            books: this.props.books
-        }))
-    }
-
 
     updateQuery = (query) => {
         query = query.trim()
@@ -32,7 +28,8 @@ class SearchBook extends Component {
 
                 const myBooks = this.props.books
                 return books.map((book) => {
-                    const booksFound = myBooks.find((myBook) => myBook.id === book.id)
+                    const match = new RegExp(escapeRegExp(this.state.query), 'i')
+                    const booksFound = myBooks.filter((myBook) => match.test(myBook.title) || match.test(book.authors))
                     book.shelf = booksFound ? booksFound.shelf : 'none'
                     return book;
                 })
@@ -46,10 +43,19 @@ class SearchBook extends Component {
             })
     }
 
+
+    clearBooks = () => {
+        this.setState(() => ({
+            books: this.props.books
+        }))
+    }
+
+
     render() {
 
         const { books } = this.state
         const { onMoveShelf } = this.props
+
 
         return (
             <div className="search-books">
@@ -62,13 +68,11 @@ class SearchBook extends Component {
                 </div>
                 <div className="search-books-results">
                     {books.length > 0 ? (
-                        
                         <ol className="books-grid">
                             {books.map((book) => (
                                 <Book key={book.id} book={book} onMoveShelf={onMoveShelf} />
                             ))}
                         </ol>
-
                     ) : (
                             <div className="search-books-no-results">
                                 <span>No results</span>
