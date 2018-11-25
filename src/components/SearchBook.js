@@ -11,11 +11,13 @@ class SearchBook extends Component {
         onMoveShelf: PropTypes.func.isRequired,
     }
 
+    // query starts empty and the books array starts with the added books showing on the screen
     state = {
         query: '',
         books: this.props.books
     }
 
+    // will search the books that mach with the query and will add into an array
     updateQuery = (query) => {
         query = query.trim()
 
@@ -40,7 +42,7 @@ class SearchBook extends Component {
             })
     }
 
-
+    // when the user delete the query
     clearBooks = () => {
         this.setState(() => ({
             books: this.props.books
@@ -64,6 +66,7 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
+                    {/* if books are found, they will render, else, no results will render */}
                     {books.length > 0 ? (
                         <ol className="books-grid">
                             {books.map((book) => (

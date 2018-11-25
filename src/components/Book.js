@@ -15,6 +15,7 @@ class Book extends Component {
         { key: 'read', title: 'Read' }
     ]
 
+    // when the user select a option to change the shelf
     handleShelf = (event) => {
         event.preventDefault()
         const { book } = this.props

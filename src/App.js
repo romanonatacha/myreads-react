@@ -8,11 +8,13 @@ import * as BooksAPI from './utils/BooksAPI';
 
 class BooksApp extends React.Component {
 
+  // declaring the empty array for books, and loading status as trus
   state = {
     books: [],
     loading: true
   }
 
+  // moving the book of shelf, using the update API method
   onMoveShelf = (book) => {
     BooksAPI.update(book, book.shelf)
     .then((result) => {
@@ -27,6 +29,7 @@ class BooksApp extends React.Component {
     })
   }
 
+  // getting all the books and when its done turning the loading status as false
   async componentDidMount() {
     const books = await BooksAPI.getAll()
     this.setState(() => ({ books, loading: false}))
@@ -34,9 +37,11 @@ class BooksApp extends React.Component {
 
   render() {
 
+    // if the data still loading, the loader component will apear
     if (this.state.loading) 
      return <Loader />
-
+    
+     // routing the main components, and render it
     return (
       <div className="app">
         <Route exact path={process.env.PUBLIC_URL + "/"} render={() => (
