@@ -38,7 +38,7 @@ class Book extends Component {
                         <div className="book-cover fade" style={{ width: 128, height: 193, backgroundImage: `url(${smallThumbnail})` }}></div>
                         <div className="book-shelf-changer">
                             <select value={shelf} onChange={this.handleShelf} >
-                                <option value="none" disabled>Move to...</option>
+                                <option value="disabled" disabled>Move to...</option>
                                 {this.options.map(({ key, title }) => (
                                     <option key={key} value={key}>{title}</option>
                                 ))}
