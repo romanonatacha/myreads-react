@@ -12,7 +12,8 @@ class Book extends Component {
     options = [
         { key: 'currentlyReading', title: 'Currently Reading' },
         { key: 'wantToRead', title: 'Want to Read' },
-        { key: 'read', title: 'Read' }
+        { key: 'read', title: 'Read' },
+        { key: 'none', title: 'None' }
     ]
 
     // when the user select a option to change the shelf
