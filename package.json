@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "https://romanonatacha.github.io/myreads-react/",
   "dependencies": {
-    "escape-string-regexp": "^1.0.5",
     "gh-pages": "^2.0.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",

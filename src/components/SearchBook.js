@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import Book from '../components/Book'
 import PropTypes from 'prop-types'
 import { search } from '../utils/BooksAPI'
-import escapeRegExp from 'escape-string-regexp'
-
 
 class SearchBook extends Component {
 
@@ -28,8 +26,7 @@ class SearchBook extends Component {
 
                 const myBooks = this.props.books
                 return books.map((book) => {
-                    const match = new RegExp(escapeRegExp(this.state.query), 'i')
-                    const booksFound = myBooks.filter((myBook) => match.test(myBook.title) || match.test(book.authors))
+                    const booksFound = myBooks.find(myBook => myBook.id === book.id);
                     book.shelf = booksFound ? booksFound.shelf : 'none'
                     return book;
                 })
